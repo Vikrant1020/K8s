@@ -1,37 +1,42 @@
-version: '3'
-
+version: '3.8'
 services:
-  django-celery:
+  web:
     build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
     ports:
-      - "8000:8000"
-    # volumes:
-    #   - ./app:/app
-    command: >
-      sh -c "python3 manage.py migrate &&
-             python3 manage.py runserver 0.0.0.0:8000 &&
-             celery -A cleary.celery worker --pool=solo -l info &&
-             celery -A cleary beat -l info"
+      - 8000:8000
     depends_on:
-      - redis
-
+      - redis 
+    networks:
+      - Connect                      
 
   redis:
     image: redis:alpine
+    networks:
+      - Connect
     ports:
-      - "6379:6379"
-  # celery:
-  #   restart: always
-  #   build:
-  #     context: .
-  #   command: >
-  #     sh -c "celery -A cleary.celery worker --pool=solo -l info &&
-  #            celery -A cleary beat -l info" 
+      - 6379:6379
 
-  #   volumes:
-  #     - ./app:/app
-  #   depends_on:
-  #     - redis
-  #     - django-celery
-volumes:
   celery:
+    build: .
+    command: celery -A cleary.celery worker -l info
+    volumes:
+      - .:/usr/src/app/
+    depends_on:
+      - redis
+    networks:
+      - Connect
+
+  celery-beat:
+    build: .
+    command: celery -A cleary.celery beat -l info
+    volumes:
+      - .:/usr/src/app/
+    depends_on:
+      - redis
+
+networks:
+  Connect:
+    # driver: 
