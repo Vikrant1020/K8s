@@ -130,7 +130,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CELERY SETTINGS
 REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
 
-# CELERY_BROKER_URL = "redis://localhost:6379"
+############### WHEN WORKING ON LOCAL #####################
+# CELERY_BROKER_URL = "redis://localhost:6379"    
+
+############### WHEN WORKING WITH DOCKER-COMPOSE #############
 CELERY_BROKER_URL = "redis://redis:6379"
 
 CELERY_ACCEPT_CONTENT =['application/json']

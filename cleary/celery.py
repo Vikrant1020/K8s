@@ -27,7 +27,7 @@ app.config_from_object(settings , namespace= 'CELERY')
 app.conf.beat_schedule = {
     'send-mail': {
         'task': 'CL.tasks.send_mail',
-        'schedule': crontab( minute= "*/50"),
+        'schedule': crontab( minute= "*/1"),
         #'args': (2,)
     }
 }
@@ -35,7 +35,7 @@ app.conf.beat_schedule = {
 ######### FOR SENDING MAIL ON TIME INTERVAL EVERY 5 MIN ##########
 
 app.conf.beat_schedule = {
-    'send-mail': {
+    'api-mail': {
         'task': 'CL.tasks.api_mail',
         'schedule': crontab( minute= "*/1"),
         #'args': (2,)
