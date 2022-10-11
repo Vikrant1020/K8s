@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  web:
+  applications:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
@@ -21,11 +21,12 @@ services:
 
   celery:
     build: .
-    command: celery -A cleary.celery worker -l info
+    command: celery -A cleary.celery worker -l info -P gevent
     volumes:
       - .:/usr/src/app/
     depends_on:
       - redis
+      - applications
     networks:
       - Connect
 
@@ -36,6 +37,9 @@ services:
       - .:/usr/src/app/
     depends_on:
       - redis
+      - applications
+    networks:
+      - Connect
 
 networks:
   Connect:

@@ -1,7 +1,8 @@
 celery==5.2.7
-django==4.0
+django==4.0.3
 requests
 django-celery-results
 django-celery-beat
 redis
 sendgrid
+gevent

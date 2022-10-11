@@ -37,7 +37,7 @@ app.conf.beat_schedule = {
 app.conf.beat_schedule = {
     'send-mail': {
         'task': 'CL.tasks.api_mail',
-        'schedule': crontab( minute= "*/5"),
+        'schedule': crontab( minute= "*/1"),
         #'args': (2,)
     }
 }
