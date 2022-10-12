@@ -1,10 +1,8 @@
 version: '3.8'
 services:
   applications:
-    build: .
+    image: vikrant1020/celery
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/usr/src/app/
     ports:
       - 8000:8000
     depends_on:
@@ -20,10 +18,8 @@ services:
       - 6379:6379
 
   celery:
-    build: .
+    image: vikrant1020/celery
     command: celery -A cleary.celery worker -l info -P gevent
-    volumes:
-      - .:/usr/src/app/
     depends_on:
       - redis
       - applications
@@ -31,10 +27,9 @@ services:
       - Connect
 
   celery-beat:
-    build: .
+    image: vikrant1020/celery
     command: celery -A cleary.celery beat -l info
-    volumes:
-      - .:/usr/src/app/
+
     depends_on:
       - redis
       - applications

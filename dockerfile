@@ -19,7 +19,7 @@ EXPOSE 8000 6379
 
 # ENTRYPOINT [ "sh","start.sh" ]
 
-CMD ["python","manage.py","runserver","0.0.0.0:8000"]
+# CMD ["python","manage.py","runserver","0.0.0.0:8000"]
 
 
 
