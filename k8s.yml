@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp
+  labels:
+    name: myapp
+spec:
+  containers:
+  - name: redis
+    image: redis:latest
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"              
+    ports:
+      - containerPort: 6379
+
+  - name: django-application
+    image: vikrant1020/celery:latest
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"          
+    args: ["python3","manage.py","runserver","0.0.0.0:8000"]    
+    ports:
+      - containerPort: 8000
+    
+  - name: celery
+    image: vikrant1020/celery:latest
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"          
+    args: ["celery","-A","cleary.celery","worker","--pool=solo","-l","info","-P","gevent"]
+
+  - name: celerybeat
+    image: vikrant1020/celery:latest
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"          
+    args: ["celery","-A","cleary.celery","beat","-l","info"]
+    
+  

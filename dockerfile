@@ -18,8 +18,12 @@ EXPOSE 8000 6379
 # RUN celery -A cleary beat -l info &>/dev/null &
 
 # ENTRYPOINT [ "sh","start.sh" ]
+# RUN python3 manage.py makemigrations
+# RUN python3 manage.py migrate
+
 
 # CMD ["python","manage.py","runserver","0.0.0.0:8000"]
+
 
 
 

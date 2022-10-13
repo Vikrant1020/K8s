@@ -19,7 +19,7 @@ def send_mail(self):
     
     import sendgrid
 
-    sg = sendgrid.SendGridAPIClient(api_key='API TOKEN')
+    sg = sendgrid.SendGridAPIClient(api_key='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')
     from_email = Email("ankur.thakur1020@gmail.com")
     to_email = To("ankur.thakur1020@gmail.com")
     subject = "Sending with SendGrid is Fun"
@@ -52,7 +52,7 @@ def api_mail(self):
         subject='Bit coin',
         html_content= output )
     try:
-        sg = SendGridAPIClient("API TOKEN")
+        sg = SendGridAPIClient("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")
         response = sg.send(message)
         print(response.status_code)
         print(response.body)
